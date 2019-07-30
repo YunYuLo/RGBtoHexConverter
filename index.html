@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Colors RGB</title>
+</head>
+<body>
+  <h2>Update Background Colors</h2>
+
+  <div class="controls">
+    <div class="content">
+          <label class="red" for="red">R</label>
+          <input id="red" type="range" name="red" min="0" max="225" value="0">
+          <label class="red">0</label>
+    </div>
+    <div class="content">
+        <label class="green" for="green">G</label>
+        <input id="green" type="range" name="green" min="0" max="225" value="0">
+        <label class="green">0</label>
+    </div>
+    <div class="content">
+        <label class="blue" for="blue">B</label>
+        <input id="blue" type="range" name="blue" min="0" max="225" value="0">
+        <label class="blue">0</label>
+    </div>
+
+    <p id="hex">#000000</p>
+
+  </div>
+
+  <style>
+    :root { 
+      --red: 0;
+      --green: 0;
+      --blue: 0;
+    }
+
+    body {
+      text-align: center;
+      background: rgb(var(--red), var(--green), var(--blue));
+      color: white;
+      font-family: 'helvetica neue', sans-serif;
+      font-weight: 100;
+      font-size: 50px;
+    }
+
+    .controls {
+        display:inline-block;
+        margin-bottom: 50px;
+    }
+
+    .content {
+        margin: 20px 0;
+    }
+
+    input {
+      width: 100px;
+    }
+
+    .red {
+        padding: 7px 15px;
+        background-color: red;
+        border-radius: 30%;
+    }
+
+
+    .green {
+        padding: 7px 15px;
+        background-color: green;
+        border-radius: 30%;
+    }
+
+
+    .blue {
+        padding: 7px 15px;
+        background-color: blue;
+        border-radius: 30%;
+    }
+
+    #hex {
+        background-color: rgba(250, 247, 249, 50%);
+        border-radius: 10%;
+    }
+  </style>
+
+  <script>
+    const inputs = document.querySelectorAll('.controls input')
+
+    function hadleUpdate() {
+        let redValue = Number(document.querySelector('#red').value)
+        let greenValue = Number(document.querySelector('#green').value)
+        let blueValue = Number(document.querySelector('#blue').value)
+
+        this.nextElementSibling.innerText = `${this.value}`
+        document.documentElement.style.setProperty(`--${this.name}`, this.value)
+        document.querySelector('#hex').innerText = rgbToHex(redValue, greenValue, blueValue)
+    }
+
+    //convert rgb to hex
+    function componentToHex(c) {
+        let hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
+    }
+
+    function rgbToHex(r, g, b) {
+        return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    }
+
+    inputs.forEach(input => input.addEventListener('change', hadleUpdate))
+    inputs.forEach(input => input.addEventListener('mousemove', hadleUpdate))
+
+
+  </script>
+
+</body>
+</html>
